@@ -1,7 +1,9 @@
 package main		// mainパッケージであることを宣言
 
 import (
-	"fmt"
+	"fmt";
+	"time";
+	"sync"
 )
 
 func main() {
@@ -26,7 +28,7 @@ func main() {
 			return
 		}
 	}()
-
+	
 	wg.Wait()
 }
 
@@ -44,5 +46,35 @@ func printFarewell(done <-chan interface{}) error {
 	if err != nil {
 		return nil
 	}
-	
+	fmt.Printf("%s world!\n", farewell)
+	return nil
+}
+
+func genGreeting(done <-chan interface{}) (string, error) {
+	switch locale, err := locale(done); {
+	case err != nil:
+		return "", err
+	case locale == "EN/US":
+		return "hello", nil
+	}
+	return "", fmt.Errorf("unsupported locale")
+}
+
+func genFarewell(done <-chan interface{}) (string, error) {
+	switch locale, err := locale(done); {
+	case err != nil:
+		return "", err
+	case locale == "EN/US":
+		return "goodbye", nil
+	}
+	return "", fmt.Errorf("unsupported locale")
+}
+
+func locale(done <-chan interface{}) (string, error) {
+	select {
+	case <-done:
+		return "", fmt.Errorf("canceled")
+	case <-time.After(1*time.Minute):
+	}
+	return "EN/US", nil
 }
