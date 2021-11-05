@@ -53,7 +53,7 @@ func main() {		// 最初に実行されるmain()関数を定義
 		sig(5*time.Minute),
 		sig(1*time.Hour),
 		sig(1*time.Minute),
-		sig(3*time.Second),
+		sig(5*time.Second),
 	)
 	fmt.Printf("done after %v", time.Since(start))
 }

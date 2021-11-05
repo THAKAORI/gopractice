@@ -9,6 +9,7 @@ import (
 
 
 func main() {		// 最初に実行されるmain()関数を定義
+	rand.Seed(time.Now().(int))
 	newRandStream := func () <-chan int {
 		randStream := make(chan int)
 		go func ()  {

@@ -39,7 +39,7 @@ func main() {		// 最初に実行されるmain()関数を定義
 				select {
 				case <-done:
 					return
-				case takeStream <- <- valueStream:
+				case takeStream <- <-valueStream:
 				}
 			}
 		}()

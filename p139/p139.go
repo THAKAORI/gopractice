@@ -77,7 +77,7 @@ func locale(ctx context.Context) (string, error) {
 	select {
 	case <-ctx.Done():
 		return "", ctx.Err()
-	case <-time.After(1*time.Minute):
+	case <-time.After(1*time.Second):
 	}
 	return "EN/US", nil
 }
